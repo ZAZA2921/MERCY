@@ -537,17 +537,6 @@
             background: var(--primary); color: white; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
         }
-        .chat-attach-btn { background: transparent !important; color: var(--text) !important; border: 1px solid var(--border) !important; }
-        .chat-attach-menu { position:absolute; bottom:72px; left:10px; grid-template-columns:repeat(3,1fr); gap:8px; padding:10px; background:var(--surface); border:1px solid var(--border); border-radius:18px; box-shadow:var(--shadow); z-index:20; }
-        .chat-attach-menu button { width:64px; height:64px; border-radius:14px; background:var(--bg); color:var(--text); border:1px solid var(--border); display:flex; flex-direction:column; gap:4px; align-items:center; justify-content:center; font-size:.72rem; }
-        .chat-attach-menu i { font-size:1.1rem; color:var(--primary); }
-        .chat-attachment-preview { margin:0 .75rem .35rem; padding:.55rem .75rem; background:var(--surface); border:1px solid var(--border); border-radius:14px; }
-        .chat-attachment-preview-inner { display:flex; align-items:center; gap:.6rem; }
-        .chat-attachment-remove { margin-left:auto; border:0; background:none; color:var(--danger); font-size:1rem; }
-        .chat-media { max-width:100%; border-radius:12px; margin-top:.35rem; display:block; }
-        .chat-file-card { display:flex; align-items:center; gap:.65rem; padding:.65rem; border-radius:12px; background:rgba(255,255,255,.08); color:inherit; text-decoration:none; }
-        .chat-file-card i { font-size:1.35rem; }
-        .chat-media-caption { margin-top:.35rem; word-break:break-word; }
 
         /* ===== ADMIN PANEL ===== */
         .admin-badge {
@@ -1153,6 +1142,28 @@
 }
 
 </style>
+
+/* MERCY — visual upgrade, preserving the original design */
+<style id="mercy-safe-visual-upgrade">
+.media-preview img,
+.media-preview video,
+.media-preview audio {
+  max-width: 100%;
+  border-radius: 14px;
+}
+.chat-attachment-preview {
+  overflow: hidden;
+  border-radius: 16px;
+}
+.chat-attachment-preview img,
+.chat-attachment-preview video {
+  display: block;
+  width: 100%;
+  max-height: 420px;
+  object-fit: contain;
+}
+</style>
+
 </head>
 <body>
 <!-- ==================== BACKGROUND LAYER ==================== -->
@@ -1660,23 +1671,9 @@
         </div>
     </div>
     <div class="chat-messages" id="chatMessages"></div>
-    <div id="chatAttachmentPreview" class="chat-attachment-preview" style="display:none;"></div>
     <div class="chat-input-bar">
-        <button class="chat-attach-btn" type="button" onclick="toggleChatAttachMenu()" title="Anexar"><i class="fas fa-paperclip"></i></button>
-        <input type="file" id="chatPhotoInput" accept="image/*" hidden onchange="handleChatFileSelect(event,'image')">
-        <input type="file" id="chatVideoInput" accept="video/*" hidden onchange="handleChatFileSelect(event,'video')">
-        <input type="file" id="chatAudioInput" accept="audio/*" hidden onchange="handleChatFileSelect(event,'audio')">
-        <input type="file" id="chatFileInput" hidden onchange="handleChatFileSelect(event,'file')">
-        <div id="chatAttachMenu" class="chat-attach-menu" style="display:none;">
-            <button type="button" onclick="document.getElementById('chatPhotoInput').click();toggleChatAttachMenu(false)"><i class="fas fa-image"></i><span>Foto</span></button>
-            <button type="button" onclick="document.getElementById('chatVideoInput').click();toggleChatAttachMenu(false)"><i class="fas fa-video"></i><span>Vídeo</span></button>
-            <button type="button" onclick="document.getElementById('chatAudioInput').click();toggleChatAttachMenu(false)"><i class="fas fa-music"></i><span>Áudio</span></button>
-            <button type="button" onclick="document.getElementById('chatFileInput').click();toggleChatAttachMenu(false)"><i class="fas fa-file"></i><span>Ficheiro</span></button>
-            <button type="button" onclick="toggleChatRecording();toggleChatAttachMenu(false)"><i class="fas fa-microphone"></i><span>Voz</span></button>
-        </div>
         <input type="text" id="chatInput" placeholder="Escreva uma mensagem..." onkeypress="if(event.key==='Enter')sendChatMessage()">
-        <button id="chatMicBtn" type="button" onclick="toggleChatRecording()" title="Gravar voz"><i class="fas fa-microphone"></i></button>
-        <button type="button" onclick="sendChatMessage()" title="Enviar"><i class="fas fa-paper-plane"></i></button>
+        <button onclick="sendChatMessage()"><i class="fas fa-paper-plane"></i></button>
     </div>
 </div>
 
@@ -2512,17 +2509,13 @@ async function fetchSecurePosts() {
         if (error) throw error;
         commentProfiles = data || [];
     }
-    const resolvedProfiles = await Promise.all((profiles || []).map(async x => [x.id, { ...x, avatar: await resolveMeryMediaRef(x.avatar) || x.avatar }]));
-    const resolvedComments = await Promise.all((commentProfiles || []).map(async x => [x.id, { ...x, avatar: await resolveMeryMediaRef(x.avatar) || x.avatar }]));
-    const resolvedProfileMap = Object.fromEntries(resolvedProfiles);
-    const resolvedCommentMap = Object.fromEntries(resolvedComments);
-    return Promise.all(posts.map(async p => {
-        const profile = resolvedProfileMap[p.user_id] || {};
-        const postComments = (comments || []).filter(c => c.post_id === p.id).map(c => ({ userId:c.user_id, userName:resolvedCommentMap[c.user_id]?.name || 'Usuário', userAvatar:resolvedCommentMap[c.user_id]?.avatar || '?', text:c.content, time:formatTime(new Date(c.created_at).getTime()) }));
+    const commentMap = Object.fromEntries(commentProfiles.map(x => [x.id, x]));
+    return posts.map(p => {
+        const profile = profileMap[p.user_id] || {};
+        const postComments = (comments || []).filter(c => c.post_id === p.id).map(c => ({ userId:c.user_id, userName:commentMap[c.user_id]?.name || 'Usuário', userAvatar:commentMap[c.user_id]?.avatar || '?', text:c.content, time:formatTime(new Date(c.created_at).getTime()) }));
         const likedBy = (likes || []).filter(l => l.post_id === p.id).map(l => l.user_id);
-        const [image, audio, video] = await Promise.all([resolveMeryMediaRef(p.image_url), resolveMeryMediaRef(p.audio_url), resolveMeryMediaRef(p.video_url)]);
-        return { id:p.id, userId:p.user_id, userName:profile.name || 'Usuário', userAvatar:profile.avatar || '?', type:p.type, subtype:p.subtype, content:p.content, image, audio, video, lang:p.lang, likes:likedBy.length, comments:postComments, timestamp:new Date(p.created_at).getTime(), likedBy };
-    }));
+        return { id:p.id, userId:p.user_id, userName:profile.name || 'Usuário', userAvatar:profile.avatar || '?', type:p.type, subtype:p.subtype, content:p.content, image:p.image_url, audio:p.audio_url, video:p.video_url, lang:p.lang, likes:likedBy.length, comments:postComments, timestamp:new Date(p.created_at).getTime(), likedBy };
+    });
 }
 
 function avatarHtml(avatar) {
@@ -2530,62 +2523,35 @@ function avatarHtml(avatar) {
     return escapeHtml(avatar || '?');
 }
 
-const MERCY_MEDIA_BUCKET = 'mercy-media';
-
-function mercyStoragePathFromRef(ref) {
-    if (!ref || typeof ref !== 'string') return null;
-    if (ref.startsWith(`storage://${MERCY_MEDIA_BUCKET}/`)) return ref.slice(`storage://${MERCY_MEDIA_BUCKET}/`.length);
-    const publicMarker = `/storage/v1/object/public/${MERCY_MEDIA_BUCKET}/`;
-    const signedMarker = `/storage/v1/object/sign/${MERCY_MEDIA_BUCKET}/`;
-    const a = ref.indexOf(publicMarker);
-    if (a >= 0) return decodeURIComponent(ref.slice(a + publicMarker.length));
-    const b = ref.indexOf(signedMarker);
-    if (b >= 0) return decodeURIComponent(ref.slice(b + signedMarker.length).split('?')[0]);
-    return null;
-}
-
-async function mercySignedUrl(ref, expiresIn = 3600) {
-    if (!ref || !mercySupabase) return ref || null;
-    const path = mercyStoragePathFromRef(ref);
-    if (!path) return ref;
-    const { data, error } = await mercySupabase.storage.from(MERCY_MEDIA_BUCKET).createSignedUrl(path, expiresIn);
-    if (error) throw error;
-    return data?.signedUrl || null;
-}
-
 async function uploadMeryMedia(fileOrBlob, folder, extension, contentType) {
-    if (!mercySupabase || !currentUser) throw new Error('AUTH_REQUIRED');
-    const safeExt = String(extension || 'bin').replace(/[^a-z0-9]/gi, '').toLowerCase() || 'bin';
-    const path = `${currentUser.id}/${folder}/${crypto.randomUUID()}.${safeExt}`;
-    const { data: sessionData, error: sessionError } = await mercySupabase.auth.getSession();
-    if (sessionError || !sessionData?.session?.access_token) throw new Error('SESSION_EXPIRED');
-    const token = sessionData.session.access_token;
-    const url = `${MERCY_CONFIG.url.replace(/\/$/, '')}/storage/v1/object/${MERCY_MEDIA_BUCKET}/${path.split('/').map(encodeURIComponent).join('/')}`;
-    const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-            apikey: MERCY_CONFIG.publishableKey,
-            Authorization: `Bearer ${token}`,
-            'Content-Type': contentType || fileOrBlob.type || 'application/octet-stream',
-            'x-upsert': 'false',
-            'cache-control': '31536000'
-        },
-        body: fileOrBlob
-    });
-    if (!response.ok) {
-        let detail = '';
-        try { detail = await response.text(); } catch (_) {}
-        const err = new Error(`STORAGE_UPLOAD_${response.status}: ${detail || response.statusText}`);
-        err.status = response.status;
-        throw err;
-    }
-    return `storage://${MERCY_MEDIA_BUCKET}/${path}`;
-}
+    if (!mercySupabase || !currentUser?.id) return null;
 
-async function resolveMeryMediaRef(ref) {
-    if (!ref) return null;
-    try { return await mercySignedUrl(ref); }
-    catch (e) { console.warn('MERCY: não foi possível criar URL assinada', e); return null; }
+    const bucket = 'mercy-media';
+    const safeExt = String(extension || 'bin').replace(/[^a-zA-Z0-9]/g, '').toLowerCase() || 'bin';
+    const safeFolder = String(folder || 'media').replace(/[^a-zA-Z0-9_-]/g, '') || 'media';
+    const path = `${currentUser.id}/${safeFolder}/${crypto.randomUUID()}.${safeExt}`;
+
+    const { error: uploadError } = await mercySupabase
+        .storage
+        .from(bucket)
+        .upload(path, fileOrBlob, {
+            contentType: contentType || 'application/octet-stream',
+            upsert: false,
+            cacheControl: '31536000'
+        });
+
+    if (uploadError) throw uploadError;
+
+    // mercy-media is private, so do NOT use getPublicUrl().
+    // Return a short-lived signed URL for the existing UI.
+    const { data, error: signedError } = await mercySupabase
+        .storage
+        .from(bucket)
+        .createSignedUrl(path, 60 * 60 * 24 * 7);
+
+    if (signedError) throw signedError;
+
+    return data?.signedUrl || null;
 }
 
 function dataUrlToBlob(dataUrl) {
@@ -3077,15 +3043,12 @@ function startDreamRecording() {
     switchCreateTab('audio', document.querySelectorAll('.create-tab')[1]);
 }
 
-async function playAudio(postId) {
-    try {
-        const posts = mercySupabase ? await fetchSecurePosts() : readJSON('mercy_posts', []);
-        const post = posts.find(p => p.id === postId);
-        if (!post || !post.audio) { showToast('Áudio indisponível'); return; }
-        const url = await resolveMeryMediaRef(post.audio) || post.audio;
-        const audio = new Audio(url);
-        audio.play().catch(() => showToast('Não foi possível reproduzir o áudio'));
-    } catch(e) { console.error(e); showToast('Áudio indisponível'); }
+function playAudio(postId) {
+    const posts = readJSON('mercy_posts', []);
+    const post = posts.find(p => p.id === postId);
+    if (!post || !post.audio) { showToast('Áudio indisponível'); return; }
+    const audio = new Audio(post.audio);
+    audio.play().catch(() => showToast('Não foi possível reproduzir o áudio'));
 }
 
 // ==================== BÍBLIA ====================
@@ -3226,32 +3189,11 @@ function closeChat(){
     currentChatId=null;
 }
 
-function parseMeryChatContent(raw) {
-    if (typeof raw !== 'string') return { type:'text', text:String(raw || '') };
-    try { const obj=JSON.parse(raw); if(obj && obj.__mercy_chat_media===1)return obj; } catch(_){}
-    return { type:'text', text:raw };
-}
-
-async function renderChatBubble(m) {
-    const mine=mercySupabase ? m.sender_id===currentUser.id : m.senderId===currentUser.id;
-    const payload=parseMeryChatContent(mercySupabase ? m.content : m.text);
-    let body='';
-    if(['image','video','audio','file'].includes(payload.type)){
-        const url=await resolveMeryMediaRef(payload.path||payload.url);
-        if(url && payload.type==='image') body=`<img src="${escapeHtml(url)}" class="chat-media" alt="${escapeHtml(payload.name||'Foto')}">`;
-        else if(url && payload.type==='video') body=`<video src="${escapeHtml(url)}" class="chat-media" controls playsinline preload="metadata"></video>`;
-        else if(url && payload.type==='audio') body=`<audio src="${escapeHtml(url)}" class="chat-media" controls preload="metadata"></audio>`;
-        else if(url && payload.type==='file') body=`<a href="${escapeHtml(url)}" target="_blank" rel="noopener" class="chat-file-card"><i class="fas fa-file"></i><span>${escapeHtml(payload.name||'Ficheiro')}</span></a>`;
-        else body='<div class="chat-file-card"><i class="fas fa-exclamation-triangle"></i><span>Mídia indisponível</span></div>';
-        if(payload.text) body+=`<div class="chat-media-caption">${escapeHtml(payload.text)}</div>`;
-    } else body=escapeHtml(payload.text||'');
-    return `<div class="chat-message ${mine?'sent':'received'}">${body}</div>`;
-}
-
 async function renderChatMessages(silent=false){
     const container=document.getElementById('chatMessages');
     if(!container||!currentUser||!currentChatId)return;
-    const token=++chatRenderToken, chatIdAtStart=currentChatId;
+    const token=++chatRenderToken;
+    const chatIdAtStart=currentChatId;
     let all=[];
     if(mercySupabase){
         let otherId=chatIdAtStart;
@@ -3261,74 +3203,60 @@ async function renderChatMessages(silent=false){
             if(!owner){container.innerHTML='<div class="chat-message received">O Fundador ainda não está disponível.</div>';return;}
             otherId=owner.id;
         }
-        const {data,error}=await mercySupabase.from('messages').select('id,sender_id,receiver_id,content,created_at').or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`).order('created_at',{ascending:true});
+        const {data,error}=await mercySupabase.from('messages')
+            .select('id,sender_id,receiver_id,content,created_at')
+            .or(`and(sender_id.eq.${currentUser.id},receiver_id.eq.${otherId}),and(sender_id.eq.${otherId},receiver_id.eq.${currentUser.id})`)
+            .order('created_at',{ascending:true});
         if(error){console.error(error);if(!silent)showToast('Não foi possível carregar a conversa');return;}
         all=data||[];
-    }else{
-        const messages=readJSON('mercy_messages',{}),chatId=chatIdAtStart==='founder'?'founder':[currentUser.id,chatIdAtStart].sort().join('_');
+    } else {
+        const messages=readJSON('mercy_messages',{});
+        const chatId=chatIdAtStart==='founder'?'founder':[currentUser.id,chatIdAtStart].sort().join('_');
         all=messages[chatId]||[];
     }
-    if(token!==chatRenderToken||currentChatId!==chatIdAtStart)return;
+    if(token!==chatRenderToken || currentChatId!==chatIdAtStart)return;
     const wasNearBottom=container.scrollHeight-container.scrollTop-container.clientHeight<120;
-    const input=document.getElementById('chatInput'),draft=input?input.value:'';
-    const bubbles=await Promise.all(all.map(renderChatBubble));
-    if(token!==chatRenderToken||currentChatId!==chatIdAtStart)return;
-    container.innerHTML=bubbles.join('');
-    if(input&&document.activeElement===input&&input.value!==draft)input.value=draft;
-    if(wasNearBottom||!silent)container.scrollTop=container.scrollHeight;
+    const input=document.getElementById('chatInput');
+    const draft=input?input.value:'';
+    container.innerHTML=all.map(m=>`<div class="chat-message ${mercySupabase?(m.sender_id===currentUser.id?'sent':'received'):(m.senderId===currentUser.id?'sent':'received')}">${escapeHtml(mercySupabase?m.content:m.text)}</div>`).join('');
+    if(input && document.activeElement===input && input.value!==draft) input.value=draft;
+    if(wasNearBottom || !silent) container.scrollTop=container.scrollHeight;
 }
 
-let chatPendingFile=null;
-let chatRecorder=null;
-let chatAudioChunks=[];
-
-function toggleChatAttachMenu(force){
-    const menu=document.getElementById('chatAttachMenu');if(!menu)return;
-    const show=typeof force==='boolean'?force:menu.style.display==='none';menu.style.display=show?'grid':'none';
-}
-function clearChatAttachment(){
-    chatPendingFile=null;const preview=document.getElementById('chatAttachmentPreview');
-    if(preview){preview.style.display='none';preview.innerHTML='';}
-    ['chatPhotoInput','chatVideoInput','chatAudioInput','chatFileInput'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
-}
-function showChatAttachmentPreview(file){
-    const preview=document.getElementById('chatAttachmentPreview');if(!preview)return;
-    const icon=file.type.startsWith('image/')?'fa-image':file.type.startsWith('video/')?'fa-video':file.type.startsWith('audio/')?'fa-music':'fa-file';
-    preview.innerHTML=`<div class="chat-attachment-preview-inner"><i class="fas ${icon}" style="font-size:1.4rem;color:var(--primary);"></i><div style="flex:1;min-width:0;"><b style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(file.name)}</b><small>${Math.max(1,Math.round(file.size/1024))} KB</small></div><button class="chat-attachment-remove" type="button" onclick="clearChatAttachment()"><i class="fas fa-times"></i></button></div>`;
-    preview.style.display='block';
-}
-function handleChatFileSelect(event,type){
-    const file=event.target.files?.[0];if(!file)return;
-    if(file.size>50*1024*1024){showToast('Ficheiros até 50 MB');event.target.value='';return;}
-    chatPendingFile={file,type:type||'file'};showChatAttachmentPreview(file);
-}
-async function toggleChatRecording(){
-    if(chatRecorder&&chatRecorder.state==='recording'){chatRecorder.stop();return;}
-    try{
-        const stream=await navigator.mediaDevices.getUserMedia({audio:true});chatAudioChunks=[];chatRecorder=new MediaRecorder(stream);
-        chatRecorder.ondataavailable=e=>{if(e.data.size)chatAudioChunks.push(e.data);};
-        chatRecorder.onstop=()=>{stream.getTracks().forEach(t=>t.stop());const blob=new Blob(chatAudioChunks,{type:chatRecorder.mimeType||'audio/webm'});const file=new File([blob],`voz-${Date.now()}.webm`,{type:blob.type||'audio/webm'});chatPendingFile={file,type:'audio'};showChatAttachmentPreview(file);const btn=document.getElementById('chatMicBtn');if(btn)btn.innerHTML='<i class="fas fa-microphone"></i>';showToast('Gravação pronta para enviar');};
-        chatRecorder.start();const btn=document.getElementById('chatMicBtn');if(btn)btn.innerHTML='<i class="fas fa-stop"></i>';showToast('Gravando voz... toque novamente para parar');
-    }catch(e){console.error(e);showToast('Não foi possível usar o microfone');}
-}
 async function sendChatMessage(){
-    if(!currentChatId||!currentUser)return;const input=document.getElementById('chatInput');if(!input)return;
-    const text=input.value.trim();if(!text&&!chatPendingFile)return;const targetChat=currentChatId,pending=chatPendingFile;input.disabled=true;
-    try{
+    if(!currentChatId||!currentUser)return;
+    const input=document.getElementById('chatInput');
+    if(!input)return;
+    const text=input.value.trim();
+    if(!text)return;
+    const targetChat=currentChatId;
+    input.disabled=true;
+    try {
         if(mercySupabase){
             let receiverId=targetChat;
-            if(targetChat==='founder'){const {data:owner,error:ownerError}=await mercySupabase.from('profiles').select('id').eq('role','owner').eq('banned',false).limit(1).maybeSingle();if(ownerError||!owner){showToast('Fundador indisponível');return;}receiverId=owner.id;}
-            let content=text;
-            if(pending){showToast('A enviar mídia...');const file=pending.file,folder=`chat/${receiverId}`,ext=(file.name.split('.').pop()||({image:'jpg',video:'mp4',audio:'webm',file:'bin'}[pending.type]||'bin')).toLowerCase();const ref=await uploadMeryMedia(file,folder,ext,file.type||'application/octet-stream');content=JSON.stringify({__mercy_chat_media:1,type:pending.type,path:ref,name:file.name,mime:file.type||'application/octet-stream',size:file.size,text});}
-            const {error}=await mercySupabase.from('messages').insert({sender_id:currentUser.id,receiver_id:receiverId,content});if(error)throw error;
-            input.value='';clearChatAttachment();await renderChatMessages();await updateChatList();
-        }else{
-            const messages=readJSON('mercy_messages',{}),chatId=targetChat==='founder'?'founder':[currentUser.id,targetChat].sort().join('_');if(!messages[chatId])messages[chatId]=[];
-            if(pending){const localUrl=URL.createObjectURL(pending.file);messages[chatId].push({senderId:currentUser.id,text:JSON.stringify({__mercy_chat_media:1,type:pending.type,path:localUrl,name:pending.file.name,text}),time:Date.now()});}else messages[chatId].push({senderId:currentUser.id,text,time:Date.now()});
-            writeJSON('mercy_messages',messages);input.value='';clearChatAttachment();await renderChatMessages();await updateChatList();
+            if(targetChat==='founder'){
+                const {data:owner,error:ownerError}=await mercySupabase.from('profiles').select('id').eq('role','owner').eq('banned',false).limit(1).maybeSingle();
+                if(ownerError||!owner){showToast('Fundador indisponível');return;}
+                receiverId=owner.id;
+            }
+            const {data,error}=await mercySupabase.from('messages').insert({sender_id:currentUser.id,receiver_id:receiverId,content:text}).select('id,sender_id,receiver_id,content,created_at').single();
+            if(error){console.error(error);showToast('Não foi possível enviar a mensagem');return;}
+            input.value='';
+            await renderChatMessages();
+            await updateChatList();
+        } else {
+            const messages=readJSON('mercy_messages',{});
+            const chatId=targetChat==='founder'?'founder':[currentUser.id,targetChat].sort().join('_');
+            if(!messages[chatId])messages[chatId]=[];
+            messages[chatId].push({senderId:currentUser.id,text,time:Date.now()});
+            writeJSON('mercy_messages',messages);
+            input.value='';
+            await renderChatMessages();
+            await updateChatList();
         }
-    }catch(e){console.error(e);showToast(String(e.message||e).includes('STORAGE_UPLOAD_')?'Não foi possível enviar a mídia. Verifique o Storage.':'Não foi possível enviar a mensagem');}
-    finally{if(input){input.disabled=false;if(currentChatId===targetChat)input.focus({preventScroll:true});}}
+    } finally {
+        if(input) { input.disabled=false; if(currentChatId===targetChat) input.focus({preventScroll:true}); }
+    }
 }
 
 function getUserName(userId){if(!mercySupabase){const u=readJSON('mercy_users',[]).find(x=>x.id===userId);return u?u.name:'Usuário';}return 'Usuário';}
@@ -3423,13 +3351,12 @@ async function handleOwnAvatarSelect(event) {
     showToast('A enviar foto...');
     try {
         const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
-        const ref = await uploadMeryMedia(file, 'avatars', ext, file.type || 'image/jpeg');
-        const displayUrl = await mercySignedUrl(ref);
-        const { error } = await mercySupabase.from('profiles').update({ avatar: ref }).eq('id', currentUser.id);
+        const url = await uploadMeryMedia(file, 'avatars', ext, file.type || 'image/jpeg');
+        const { error } = await mercySupabase.from('profiles').update({ avatar: url }).eq('id', currentUser.id);
         if (error) throw error;
-        currentUser.avatar = displayUrl;
-        document.getElementById('headerAvatar').innerHTML = avatarHtml(displayUrl);
-        document.getElementById('profileAvatar').innerHTML = avatarHtml(displayUrl);
+        currentUser.avatar = url;
+        document.getElementById('headerAvatar').innerHTML = avatarHtml(url);
+        document.getElementById('profileAvatar').innerHTML = avatarHtml(url);
         showToast('Foto de perfil atualizada!');
         renderFeed();
     } catch (e) {
