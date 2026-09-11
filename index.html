@@ -1450,6 +1450,42 @@ body{min-height:100vh;overflow-x:hidden;}
 .badge-prayer{background:rgba(214,179,86,.15);color:#f0d58a}.post-card.mercy-longpress-active{transform:scale(.995);box-shadow:0 0 0 1px rgba(233,201,111,.55),0 0 28px rgba(233,201,111,.13)}
 @media(min-width:700px){.mercy-home-hero{min-height:430px}.mercy-home-shortcuts,.mercy-home-section,.mercy-home-feed-section{max-width:760px;margin-left:auto;margin-right:auto}}
 </style>
+
+<style id="mercy-home-final-creation-v5">
+/* MERCY background from the user's supplied divine mountain image. No legacy animated wallpaper. */
+html,body{background:#05080d!important;color:#fff!important;}
+#bgLayer{position:fixed!important;inset:0!important;z-index:0!important;overflow:hidden!important;pointer-events:none!important;opacity:1!important;background-image:linear-gradient(180deg,rgba(3,7,12,.18),rgba(3,7,12,.40) 45%,rgba(3,7,12,.72) 100%),url('./mercy-background.jpg')!important;background-size:cover!important;background-position:center top!important;background-repeat:no-repeat!important;}
+#bgLayer:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 52% 20%,rgba(255,222,151,.20),transparent 27%),linear-gradient(90deg,rgba(2,6,11,.34),transparent 50%,rgba(2,6,11,.34));}
+#bgLayer:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(2,6,11,.05) 0%,rgba(2,6,11,.10) 32%,rgba(2,6,11,.48) 72%,rgba(2,6,11,.76) 100%);}
+#appContainer{background:transparent!important;z-index:1!important;}
+.main-content,.bottom-nav,.app-header{position:relative;z-index:2;}
+.app-header{background:rgba(4,8,14,.62)!important;backdrop-filter:blur(18px) saturate(1.1)!important;-webkit-backdrop-filter:blur(18px) saturate(1.1)!important;}
+#page-home.mercy-home-v3{background:transparent!important;}
+.mercy-brand-button{display:flex;align-items:center;gap:9px;border:0;background:none;padding:0;color:#fff;cursor:pointer;font:inherit;}
+.mercy-brand-image{width:38px;height:38px;border-radius:11px;object-fit:cover;object-position:center;border:1px solid rgba(241,223,189,.58);box-shadow:0 0 24px rgba(241,223,189,.22),0 8px 24px rgba(0,0,0,.25);}
+.mercy-brand-button>span{font-family:'Playfair Display',serif;font-size:1.22rem;letter-spacing:5px;color:#f8f4ec;}
+.nav-item.center-btn{top:-18px!important;}
+.nav-item.center-btn i{width:56px!important;height:56px!important;border-radius:50%!important;background:linear-gradient(145deg,#fff0b7,#d7a83f 55%,#8c5e19)!important;color:#14110b!important;border:3px solid rgba(5,9,15,.95)!important;box-shadow:0 0 0 1px rgba(241,223,189,.38),0 12px 32px rgba(224,178,75,.28),0 0 28px rgba(241,223,189,.18)!important;}
+.nav-item.center-btn span{margin-top:3px;color:#e8d7ad!important;}
+/* Quick create */
+.mercy-quick-overlay{position:fixed;inset:0;z-index:100400;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.46);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.mercy-quick-overlay.show{display:flex;}
+.mercy-quick-sheet{width:min(560px,100%);padding:16px 16px calc(22px + env(safe-area-inset-bottom));border:1px solid rgba(241,223,189,.20);border-bottom:0;border-radius:28px 28px 0 0;background:linear-gradient(180deg,rgba(10,17,28,.96),rgba(5,10,17,.98));box-shadow:0 -24px 70px rgba(0,0,0,.55),0 0 40px rgba(241,223,189,.07);}
+.mercy-quick-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:13px;}.mercy-quick-head span{font-size:.58rem;letter-spacing:2.5px;color:#d8bb78;font-weight:800}.mercy-quick-head h3{font:600 1.3rem 'Playfair Display',serif;margin-top:4px}.mercy-quick-head button{width:38px;height:38px;border-radius:12px;border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);color:#fff;}
+.mercy-quick-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mercy-quick-grid button{padding:15px;text-align:left;border-radius:18px;border:1px solid rgba(241,223,189,.14);background:rgba(255,255,255,.045);color:#fff;display:grid;grid-template-columns:48px 1fr;grid-template-rows:auto auto;column-gap:10px;align-items:center}.mercy-quick-icon{grid-row:1/span 2;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,rgba(241,223,189,.20),rgba(241,223,189,.05));border:1px solid rgba(241,223,189,.20);color:#f1dfbd;font-size:1.05rem}.mercy-quick-grid strong{font-size:.85rem}.mercy-quick-grid small{font-size:.63rem;line-height:1.35;color:#929aa6;margin-top:3px}
+/* Brand viewer */
+.mercy-brand-viewer{position:fixed;inset:0;z-index:100500;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(1,4,8,.78);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}.mercy-brand-viewer.show{display:flex}.mercy-brand-viewer-close{position:absolute;right:16px;top:calc(16px + env(safe-area-inset-top));width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.16);background:rgba(6,10,16,.58);color:#fff;font-size:1rem}.mercy-brand-viewer-card{width:min(900px,100%);border-radius:26px;overflow:hidden;border:1px solid rgba(241,223,189,.22);box-shadow:0 30px 90px rgba(0,0,0,.65),0 0 50px rgba(241,223,189,.10);background:#070c13}.mercy-brand-viewer-card img{display:block;width:100%;height:auto}.mercy-brand-viewer-card p{text-align:center;padding:12px;color:#f1dfbd;letter-spacing:6px;font-family:'Playfair Display',serif}
+/* Full-screen publish composer */
+#createModal{align-items:stretch!important;background:rgba(1,4,8,.72)!important;backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;}
+#createModal .modal-sheet{width:100%!important;max-width:920px!important;height:100dvh!important;max-height:100dvh!important;border-radius:0!important;margin:0!important;background:linear-gradient(180deg,rgba(6,12,21,.94),rgba(5,10,17,.97))!important;overflow-y:auto!important;border:0!important;}
+#createModal .modal-header{position:sticky;top:0;z-index:30;background:rgba(5,10,17,.72)!important;backdrop-filter:blur(20px)!important;border-bottom-color:rgba(241,223,189,.15)!important;}
+.mercy-create-chooser{min-height:calc(100dvh - 80px);display:flex;flex-direction:column;justify-content:center;padding:12px 2px 80px}.mercy-chooser-intro{text-align:center;max-width:560px;margin:0 auto 20px}.mercy-chooser-intro>span{font-size:.58rem;letter-spacing:3px;color:#e5c77f;font-weight:800}.mercy-chooser-intro h2{font:600 2rem/1.05 'Playfair Display',serif;margin:9px 0;color:#fff}.mercy-chooser-intro p{font-size:.78rem;color:#aeb4bd;line-height:1.55}.mercy-chooser-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.mercy-chooser-grid button{min-height:112px;text-align:left;padding:15px;border-radius:20px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(145deg,rgba(241,223,189,.08),rgba(255,255,255,.025));color:#fff;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}.mercy-chooser-grid button i{font-size:1.2rem;color:#f1dfbd}.mercy-chooser-grid strong{font-size:.82rem}.mercy-chooser-grid small{font-size:.61rem;color:#8e97a3;line-height:1.35}.mercy-composer-tools{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin:10px 0}.mercy-composer-tools button{min-height:56px;border-radius:15px;border:1px solid rgba(255,255,255,.09);background:rgba(241,223,189,.045);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font-size:.61rem}.mercy-composer-tools i{color:#f1dfbd;font-size:1rem}.mercy-composer-style-panel{margin-top:10px;padding:13px;border-radius:19px;background:rgba(241,223,189,.04);border:1px solid rgba(241,223,189,.12)}.mercy-style-heading{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;color:#fff;font-size:.78rem}.mercy-style-heading span{color:#f1dfbd;font-size:.67rem}.mercy-bg-choices{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.mercy-bg-choices button{min-height:42px;border-radius:12px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045);color:rgba(255,255,255,.75);font-size:.65rem}.mercy-bg-choices button.active{border-color:rgba(241,223,189,.55);box-shadow:0 0 20px rgba(241,223,189,.14);color:#fff;background:rgba(241,223,189,.10)}.mercy-style-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.mercy-style-row label{font-size:.63rem;color:rgba(255,255,255,.55)}.mercy-style-row select{display:block;width:100%;margin-top:4px;padding:10px;border-radius:11px;border:1px solid rgba(255,255,255,.08);background:#0a111b;color:#fff}.mercy-emoji-picker{margin:8px 0;padding:10px;border:1px solid rgba(241,223,189,.14);border-radius:18px;background:rgba(4,9,16,.92);max-height:230px;overflow:auto}.mercy-emoji-cats{display:flex;gap:6px;overflow:auto;margin-bottom:8px}.mercy-emoji-cats button{flex:0 0 auto;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.05);color:#fff;border-radius:10px;padding:7px 9px}.mercy-emoji-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:3px}.mercy-emoji-grid button{border:0;background:transparent;color:#fff;font-size:1.35rem;min-height:36px;border-radius:8px}.mercy-emoji-grid button:hover{background:rgba(241,223,189,.10)}
+#createTextArea{min-height:190px!important;background:rgba(255,255,255,.035)!important;color:#fff!important;border-color:rgba(255,255,255,.11)!important}.mercy-audio-caption{min-height:100px!important;margin-bottom:8px}
+/* Text posts can actually carry the selected visual background. */
+.post-card .mercy-post-text-wrap{padding:15px;border-radius:16px;min-height:110px;display:flex;align-items:center}.post-card .mercy-post-text-wrap p{width:100%;margin:0}.mercy-post-bg-mercy{background-image:linear-gradient(180deg,rgba(3,7,12,.18),rgba(3,7,12,.60)),url('./mercy-background.jpg');background-size:cover;background-position:center 34%;border:1px solid rgba(241,223,189,.20);box-shadow:inset 0 1px 0 rgba(255,255,255,.10),0 12px 35px rgba(0,0,0,.22)}.mercy-post-bg-glass{background:linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025));border:1px solid rgba(255,255,255,.10)}.mercy-post-bg-midnight{background:linear-gradient(145deg,#101d32,#070c14)}.mercy-post-bg-dawn{background:radial-gradient(circle at 50% 10%,rgba(255,221,154,.34),transparent 45%),linear-gradient(145deg,#16202b,#0a1018)}.mercy-post-bg-ocean{background:radial-gradient(circle at 20% 20%,rgba(68,149,201,.28),transparent 35%),linear-gradient(145deg,#081a29,#071018)}.mercy-post-bg-violet{background:radial-gradient(circle at 70% 20%,rgba(139,92,246,.30),transparent 38%),linear-gradient(145deg,#171127,#090b13)}.mercy-post-bg-rose{background:radial-gradient(circle at 65% 15%,rgba(244,114,182,.26),transparent 38%),linear-gradient(145deg,#24121d,#0c0a10)}.mercy-post-bg-scripture{background:linear-gradient(145deg,rgba(112,81,37,.32),rgba(8,10,14,.96)),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px)}
+@media(max-width:600px){.mercy-chooser-grid{grid-template-columns:1fr 1fr}.mercy-composer-tools{grid-template-columns:repeat(3,1fr)}.mercy-bg-choices{grid-template-columns:repeat(2,1fr)}.mercy-emoji-grid{grid-template-columns:repeat(7,1fr)}}
+@media(max-width:390px){.mercy-chooser-grid{gap:8px}.mercy-chooser-grid button{min-height:104px;padding:12px}.mercy-brand-button>span{letter-spacing:4px}.mercy-brand-image{width:34px;height:34px}}
+</style>
 </head>
 <body>
 <!-- ==================== BACKGROUND LAYER ==================== -->
@@ -1521,7 +1557,7 @@ body{min-height:100vh;overflow-x:hidden;}
 <div id="appContainer">
 <!-- HEADER -->
 <header class="app-header">
-<h1><span aria-hidden="true" class="mercy-brand-mark"><span class="mercy-brand-cross"></span></span><span>MERCY</span></h1>
+<h1><button type="button" class="mercy-brand-button" onclick="openMercyBrandViewer()" aria-label="Ver símbolo e logotipo MERCY"><img class="mercy-brand-image" src="./mercy-logo-symbol.jpg" alt="MERCY"><span>MERCY</span></button></h1>
 <div class="header-actions">
 <button class="header-btn" onclick="openGlobalSearch()"><i class="fas fa-search"></i></button>
 <button class="header-btn" onclick="openNotifications()" style="position:relative;">
@@ -1536,7 +1572,6 @@ body{min-height:100vh;overflow-x:hidden;}
 <main class="main-content">
 <!-- ===== PAGE: HOME / FEED ===== -->
 <div class="page active mercy-home-v3" id="page-home">
-'
 <div class="mercy-home-hero" style="background-image:url('./hero.jpg')">
   <div class="mercy-home-hero-overlay"></div>
   <div class="mercy-home-hero-copy"><span>DESTAQUE</span><h2>Deus tem um propósito<br>para a tua história.</h2><p>Não estás aqui por acaso. A tua história ainda não acabou.</p><button type="button" onclick="openHomeHero()">Ver mais <i class="fas fa-arrow-right"></i></button></div>
@@ -1561,7 +1596,7 @@ body{min-height:100vh;overflow-x:hidden;}
   <button onclick="showHomeFeed('audio')"><img src="./filter-audio.jpg" alt="Áudios"><b>Áudios</b></button>
   <button onclick="showHomeFeed('text')"><img src="./filter-text.jpg" alt="Publicações"><b>Publicações</b></button>
 </div></section>
-<section class="mercy-home-feed-section"><div class="mercy-home-section-head"><h3>Comunidade</h3><button onclick="openCreateModal()">+ Publicar</button></div><div class="mercy-feed-filters-v3">
+<section class="mercy-home-feed-section"><div class="mercy-home-section-head"><h3>Comunidade</h3><button onclick="openQuickCreateMenu()">+ Publicar</button></div><div class="mercy-feed-filters-v3">
  <button class="active" onclick="showHomeFeed('all',this)">Todos</button><button onclick="showHomeFeed('text',this)">Texto</button><button onclick="showHomeFeed('audio',this)">Áudio</button><button onclick="showHomeFeed('image',this)">Fotos</button><button onclick="showHomeFeed('video',this)">Vídeos</button><button onclick="showHomeFeed('testimony',this)">Testemunhos</button><button onclick="showHomeFeed('dream',this)">Sonhos</button><button onclick="showHomeFeed('prayer',this)">Orações</button>
 </div><div id="feedContainer"></div></section>
 </div>
@@ -1812,6 +1847,7 @@ body{min-height:100vh;overflow-x:hidden;}
 <button class="nav-item active" id="nav-home" onclick="showPage('home')"><i class="fas fa-home"></i><span>Início</span></button>
 <button class="nav-item" id="nav-bible" onclick="showPage('bible')"><i class="fas fa-book-open"></i><span>Bíblia</span></button>
 <button class="nav-item" id="nav-music" onclick="showPage('music')"><i class="fas fa-music"></i><span>Música</span></button>
+<button class="nav-item center-btn" id="nav-create" onclick="openQuickCreateMenu()" aria-label="Criar"><i class="fas fa-plus"></i><span>Criar</span></button>
 <button class="nav-item" id="nav-communities" onclick="openCommunityHub()"><i class="fas fa-users"></i><span>Comunidades</span></button>
 <button class="nav-item" id="nav-more" onclick="openMoreHub()"><i class="fas fa-ellipsis-h"></i><span>Mais</span></button>
 </nav>
@@ -1824,6 +1860,19 @@ body{min-height:100vh;overflow-x:hidden;}
 <button onclick="closeCreateModal()"><i class="fas fa-times"></i></button>
 </div>
 <div class="modal-body">
+<div id="createChooserPanel" class="mercy-create-chooser" style="display:none;">
+  <div class="mercy-chooser-intro"><span>PUBLICAR NO MERCY</span><h2>Escolhe como queres partilhar</h2><p>Uma palavra, uma imagem, um vídeo, um áudio, um testemunho, um sonho ou uma oração.</p></div>
+  <div class="mercy-chooser-grid">
+    <button type="button" onclick="chooseCreateType('text')"><i class="fas fa-pen"></i><strong>Texto</strong><small>Reflexão, versículo ou mensagem</small></button>
+    <button type="button" onclick="chooseCreateType('photo')"><i class="fas fa-image"></i><strong>Foto</strong><small>Partilha um momento ou imagem</small></button>
+    <button type="button" onclick="chooseCreateType('video')"><i class="fas fa-video"></i><strong>Vídeo</strong><small>Conta a tua história em vídeo</small></button>
+    <button type="button" onclick="chooseCreateType('audio')"><i class="fas fa-microphone"></i><strong>Áudio</strong><small>Grava uma palavra ou louvor</small></button>
+    <button type="button" onclick="chooseCreateType('testimony')"><i class="fas fa-heart"></i><strong>Testemunho</strong><small>O que Deus fez na tua vida</small></button>
+    <button type="button" onclick="chooseCreateType('dream')"><i class="fas fa-moon"></i><strong>Sonho</strong><small>Partilha o que viste ou sonhaste</small></button>
+    <button type="button" onclick="chooseCreateType('prayer')"><i class="fas fa-praying-hands"></i><strong>Oração</strong><small>Uma oração para a comunidade</small></button>
+  </div>
+</div>
+<div id="createEditorPanel">
 <div class="create-tabs">
 <button class="create-tab active" onclick="switchCreateTab('text', this)">Texto</button>
 <button class="create-tab" onclick="switchCreateTab('audio', this)">Áudio</button>
@@ -1832,7 +1881,32 @@ body{min-height:100vh;overflow-x:hidden;}
 <button class="create-tab" onclick="switchCreateTab('prayer', this)">Oração</button>
 </div>
 <div id="createTextPanel">
-<textarea class="create-textarea" id="createTextArea" placeholder="Compartilhe uma palavra de Deus, um versículo, uma reflexão..."></textarea>
+<textarea class="create-textarea" id="createTextArea" placeholder="Compartilha uma palavra de Deus, um versículo, uma reflexão..."></textarea>
+<div class="mercy-composer-tools" aria-label="Ferramentas de publicação">
+  <button type="button" onclick="toggleMercyEmojiPicker()"><i class="far fa-smile"></i><span>Emoji</span></button>
+  <button type="button" onclick="mercyComposerSticker()"><i class="fas fa-star"></i><span>Sticker</span></button>
+  <button type="button" onclick="mercyComposerTextAlign()"><i class="fas fa-align-center"></i><span>Texto</span></button>
+  <button type="button" onclick="document.getElementById('imageInput').click()"><i class="far fa-image"></i><span>Foto</span></button>
+  <button type="button" onclick="document.getElementById('videoInput').click()"><i class="fas fa-video"></i><span>Vídeo</span></button>
+  <button type="button" onclick="switchCreateTab('audio', document.querySelectorAll('.create-tab')[1])"><i class="fas fa-microphone"></i><span>Áudio</span></button>
+</div>
+<div class="mercy-composer-style-panel">
+  <div class="mercy-style-heading"><strong>Fundo da publicação</strong><span id="mercyComposerStyleName">MERCY</span></div>
+  <div class="mercy-bg-choices">
+    <button type="button" data-bg="mercy" onclick="mercyComposerBg('mercy')">MERCY</button>
+    <button type="button" data-bg="glass" onclick="mercyComposerBg('glass')">Vidro</button>
+    <button type="button" data-bg="midnight" onclick="mercyComposerBg('midnight')">Noite</button>
+    <button type="button" data-bg="dawn" onclick="mercyComposerBg('dawn')">Luz</button>
+    <button type="button" data-bg="ocean" onclick="mercyComposerBg('ocean')">Oceano</button>
+    <button type="button" data-bg="violet" onclick="mercyComposerBg('violet')">Violeta</button>
+    <button type="button" data-bg="rose" onclick="mercyComposerBg('rose')">Rosa</button>
+    <button type="button" data-bg="scripture" onclick="mercyComposerBg('scripture')">Palavra</button>
+  </div>
+  <div class="mercy-style-row">
+    <label>Cor <select id="mercyComposerColor" onchange="mercyComposerColor(this.value)"><option value="#ffffff">Branco</option><option value="#f7e7c1">Creme</option><option value="#d8efff">Azul claro</option><option value="#f1ddff">Violeta</option><option value="#ffe0e0">Rosa claro</option></select></label>
+    <label>Tamanho <select id="mercyComposerSize" onchange="mercyComposerSize(this.value)"><option value=".92rem">Pequeno</option><option value="1rem" selected>Normal</option><option value="1.15rem">Grande</option><option value="1.3rem">Muito grande</option><option value="1.5rem">Destaque</option></select></label>
+  </div>
+</div>
 <div class="create-options">
 <div class="create-option" onclick="document.getElementById('imageInput').click()">
 <i class="fas fa-image"></i>
@@ -1856,7 +1930,10 @@ body{min-height:100vh;overflow-x:hidden;}
                     </button>
 </div>
 </div>
+<div class="mercy-emoji-picker" id="mercyEmojiPicker" style="display:none;"></div>
 <div id="createAudioPanel" style="display:none;">
+<textarea class="create-textarea mercy-audio-caption" id="audioCaption" placeholder="Escreve uma mensagem para acompanhar o teu áudio..."></textarea>
+<div class="mercy-composer-tools mercy-audio-tools"><button type="button" onclick="toggleMercyEmojiPicker('audioCaption')"><i class="far fa-smile"></i><span>Emoji</span></button></div>
 <div class="recording-ui" id="recordingUI">
 <div class="record-timer" id="recordTimer">00:00</div>
 <button class="record-btn" id="recordBtn" onclick="toggleRecording()">
@@ -1908,6 +1985,22 @@ body{min-height:100vh;overflow-x:hidden;}
             </button>
 </div>
 </div>
+</div>
+</div>
+<!-- ==================== MERCY QUICK CREATE MENU ==================== -->
+<div class="mercy-quick-overlay" id="mercyQuickCreate" onclick="if(event.target===this)closeQuickCreateMenu()">
+  <div class="mercy-quick-sheet" role="dialog" aria-modal="true" aria-label="Criar no MERCY">
+    <div class="mercy-quick-head"><div><span>CRIAR</span><h3>O que queres fazer?</h3></div><button type="button" onclick="closeQuickCreateMenu()"><i class="fas fa-times"></i></button></div>
+    <div class="mercy-quick-grid">
+      <button type="button" onclick="closeQuickCreateMenu();openCreateModal('chooser')"><span class="mercy-quick-icon"><i class="fas fa-pen-nib"></i></span><strong>Publicar</strong><small>Texto, foto, vídeo, áudio e mais</small></button>
+      <button type="button" onclick="closeQuickCreateMenu();showPage('profile')"><span class="mercy-quick-icon"><i class="fas fa-user"></i></span><strong>Perfil</strong><small>Ver e personalizar o teu perfil</small></button>
+    </div>
+  </div>
+</div>
+<!-- ==================== MERCY BRAND VIEWER ==================== -->
+<div class="mercy-brand-viewer" id="mercyBrandViewer" onclick="if(event.target===this)closeMercyBrandViewer()">
+  <button type="button" class="mercy-brand-viewer-close" onclick="closeMercyBrandViewer()" aria-label="Fechar"><i class="fas fa-times"></i></button>
+  <div class="mercy-brand-viewer-card"><img src="./mercy-logo-full.jpg" alt="Logotipo MERCY completo"><p>MERCY</p></div>
 </div>
 <!-- ==================== REPORT MODAL ==================== -->
 <div class="modal-overlay" id="reportModal" onclick="if(event.target===this)closeReportModal()"><div class="modal-sheet"><div class="modal-header"><h3>Denunciar publicação</h3><button onclick="closeReportModal()"><i class="fas fa-times"></i></button></div><div class="modal-body"><p style="color:var(--text-secondary);font-size:.86rem;margin-bottom:12px">Escolhe o motivo da denúncia.</p><div class="mercy-report-options"><button onclick="submitPostReport('spam')">Spam ou conteúdo enganoso</button><button onclick="submitPostReport('harassment')">Assédio ou abuso</button><button onclick="submitPostReport('hate')">Discurso de ódio</button><button onclick="submitPostReport('sexual')">Conteúdo sexual</button><button onclick="submitPostReport('violence')">Violência</button><button onclick="submitPostReport('fraud')">Fraude ou golpe</button><button onclick="submitPostReport('other')">Outro</button></div></div></div></div>
@@ -2334,96 +2427,15 @@ function writeBgPrefs(prefs) {
 function applyBackground(prefs) {
     const layer = document.getElementById('bgLayer');
     if (!layer) return;
-
-    layer.className = 'bg-layer';
-
-    if (!prefs.wallpaper) {
-        layer.classList.add('off');
-        document.documentElement.classList.remove('wallpaper-on');
-        document.documentElement.classList.add('wallpaper-off');
-        layer.innerHTML = '';
-        return;
-    }
-
-    document.documentElement.classList.remove('wallpaper-off');
+    layer.className = 'bg-layer mercy-static-background';
+    layer.innerHTML = '';
+    layer.style.backgroundImage = "linear-gradient(180deg,rgba(3,7,12,.18),rgba(3,7,12,.42) 48%,rgba(3,7,12,.76) 100%),url('./mercy-background.jpg')";
+    layer.style.backgroundSize = 'cover';
+    layer.style.backgroundPosition = 'center top';
+    layer.style.backgroundRepeat = 'no-repeat';
+    layer.style.opacity = '1';
     document.documentElement.classList.add('wallpaper-on');
-
-    const theme = BG_THEMES.includes(prefs.theme) ? prefs.theme : 'starry';
-    layer.classList.add('bg-theme-' + theme);
-
-    let html = '';
-    switch (theme) {
-        case 'starry':
-            html = `<div class="stars"></div><div class="stars2"></div><div class="stars3"></div>
-                    <div class="shooting-star"></div><div class="shooting-star"></div>
-                    <div class="shooting-star"></div><div class="shooting-star"></div>
-                    <div class="moon"></div>`;
-            break;
-        case 'aurora':
-            html = `<div class="aurora-layer"></div><div class="aurora-layer"></div>
-                    <div class="aurora-layer"></div><div class="aurora-stars"></div>`;
-            break;
-        case 'ocean':
-            html = `<div class="wave"></div><div class="wave"></div><div class="wave"></div><div class="wave"></div>`;
-            break;
-        case 'embers':
-            html = `<div class="fire-glow"></div>`;
-            break;
-        case 'orbs':
-            html = `<div class="orb"></div><div class="orb"></div><div class="orb"></div>
-                    <div class="orb"></div><div class="orb"></div>
-                    <div class="light-ray"></div><div class="light-ray"></div><div class="light-ray"></div>`;
-            break;
-        case 'flames':
-            html = `<div class="flame"></div><div class="flame"></div><div class="flame"></div>
-                    <div class="flame"></div><div class="flame"></div><div class="flame"></div>
-                    <div class="fire-base"></div>`;
-            break;
-        case 'rain':
-            html = `<div class="rain-glow"></div>`;
-            break;
-    }
-    layer.innerHTML = html;
-
-    if (theme === 'ocean') {
-        for (let i = 0; i < 20; i++) {
-            const b = document.createElement('div'); b.className = 'bubble';
-            b.style.left = Math.random() * 100 + '%';
-            b.style.width = b.style.height = (4 + Math.random() * 12) + 'px';
-            b.style.animationDuration = (5 + Math.random() * 8) + 's';
-            b.style.animationDelay = Math.random() * 10 + 's';
-            layer.appendChild(b);
-        }
-    }
-    if (theme === 'embers') {
-        for (let i = 0; i < 30; i++) {
-            const e = document.createElement('div'); e.className = 'ember';
-            e.style.left = Math.random() * 100 + '%';
-            e.style.width = e.style.height = (3 + Math.random() * 8) + 'px';
-            e.style.animationDuration = (4 + Math.random() * 6) + 's';
-            e.style.animationDelay = Math.random() * 8 + 's';
-            layer.appendChild(e);
-        }
-    }
-    if (theme === 'flames') {
-        for (let i = 0; i < 25; i++) {
-            const s = document.createElement('div'); s.className = 'spark';
-            s.style.left = (20 + Math.random() * 60) + '%';
-            s.style.animationDuration = (3 + Math.random() * 4) + 's';
-            s.style.animationDelay = Math.random() * 6 + 's';
-            layer.appendChild(s);
-        }
-    }
-    if (theme === 'rain') {
-        for (let i = 0; i < 40; i++) {
-            const r = document.createElement('div'); r.className = 'rain-drop';
-            r.style.left = Math.random() * 100 + '%';
-            r.style.animationDuration = (1 + Math.random() * 2) + 's';
-            r.style.animationDelay = Math.random() * 5 + 's';
-            r.style.opacity = 0.3 + Math.random() * 0.7;
-            layer.appendChild(r);
-        }
-    }
+    document.documentElement.classList.remove('wallpaper-off');
 }
 
 function initBackgroundManager() {
@@ -2742,15 +2754,26 @@ async function syncOwnProfileCover(url){
     }
 }
 
-function showApp() {
+async function showApp() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('appContainer').style.display = 'block';
 
+    // Resolver a foto real do perfil quando o banco guarda storage://...
+    const avatarRef = currentUser?.avatar || '';
+    let avatarDisplay = avatarRef;
+    try {
+        if (avatarRef && !/^https?:\/\//i.test(avatarRef) && typeof resolveMeryMediaRef === 'function') {
+            avatarDisplay = await resolveMeryMediaRef(avatarRef) || avatarRef;
+        }
+    } catch(e) { console.warn('MERCY: avatar do utilizador não pôde ser resolvido', e); }
+    currentUser.avatarRef = avatarRef;
+    currentUser.avatar = avatarDisplay;
+
     // Atualizar header
-    document.getElementById('headerAvatar').innerHTML = avatarHtml(currentUser.avatar);
+    document.getElementById('headerAvatar').innerHTML = avatarHtml(avatarDisplay);
 
     // Atualizar perfil
-    document.getElementById('profileAvatar').innerHTML = avatarHtml(currentUser.avatar);
+    document.getElementById('profileAvatar').innerHTML = avatarHtml(avatarDisplay);
     syncOwnProfileCover(currentUser.cover_url || currentUser.cover || null);
     document.getElementById('profileName').textContent = currentUser.name;
     document.getElementById('profileEmail').textContent = currentUser.email;
@@ -2911,7 +2934,8 @@ async function fetchSecurePosts() {
         const dislikedBy = (dislikes || []).filter(l => l.post_id === p.id).map(l => l.user_id);
         const savedBy = (saves || []).filter(l => l.post_id === p.id).map(l => l.user_id);
         const [image, audio, video] = await Promise.all([resolveMeryMediaRef(p.image_url), resolveMeryMediaRef(p.audio_url), resolveMeryMediaRef(p.video_url)]);
-        return { id:p.id, userId:p.user_id, userName:profile.name || 'Usuário', userAvatar:profile.avatar || '?', type:p.type, subtype:p.subtype, content:p.content, image, audio, video, lang:p.lang, likes:likedBy.length, comments:postComments, timestamp:new Date(p.created_at).getTime(), likedBy, dislikedBy, savedBy };
+        const decoded = mercyDecodePostContent(p.content);
+        return { id:p.id, userId:p.user_id, userName:profile.name || 'Usuário', userAvatar:profile.avatar || '?', type:p.type, subtype:p.subtype, content:decoded.text, composer:decoded.meta, image, audio, video, lang:p.lang, likes:likedBy.length, comments:postComments, timestamp:new Date(p.created_at).getTime(), likedBy, dislikedBy, savedBy };
     }));
 }
 
@@ -3061,7 +3085,7 @@ function renderPostCard(post, containerId) {
                 ${currentUser && (isAdmin() || post.userId === currentUser.id) ? `<button onclick="deletePost('${post.id}')" style="background:none;border:none;color:var(--danger);cursor:pointer;margin-left:auto;"><i class="fas fa-trash"></i></button>` : ''}
             </div>
             <div class="post-body">
-                <p>${escapeHtml(post.content)}</p>
+                ${(!post.image && !post.video && post.content) ? `<div class="mercy-post-text-wrap mercy-post-bg-${escapeHtml(post.composer?.bg||'glass')}" style="color:${escapeHtml(post.composer?.textColor||'#fff')};text-align:${escapeHtml(post.composer?.align||'left')};font-size:${escapeHtml(post.composer?.fontSize||'1rem')}"><p style="color:inherit;text-align:inherit;font-size:inherit;">${escapeHtml(post.content)}</p></div>` : `<p>${escapeHtml(post.content||'')}</p>`}
                 ${hasBigMedia ? `<div onclick="openFullscreen('${containerId}','${post.id}')" style="cursor:pointer;position:relative;">${mediaHtml}</div>` : mediaHtml}
             </div>
             <div class="post-translate">
@@ -3320,14 +3344,20 @@ async function renderDreams() {
 
 // ==================== CRIAR POST ====================
 function openCreateModal(type) {
-    createPostType = type || 'text';
+    createPostType = type || 'chooser';
+    mercyResetComposer();
     document.getElementById('createModal').classList.add('show');
     document.body.style.overflow = 'hidden';
+    const chooser=document.getElementById('createChooserPanel');
+    const editor=document.getElementById('createEditorPanel');
+    if(chooser) chooser.style.display = (createPostType==='chooser') ? 'block' : 'none';
+    if(editor) editor.style.display = (createPostType==='chooser') ? 'none' : 'block';
 
     // Reset
     document.getElementById('createTextArea').value = '';
     document.getElementById('testimonyArea').value = '';
     document.getElementById('dreamArea').value = '';
+    if(document.getElementById('audioCaption')) document.getElementById('audioCaption').value = '';
     if(document.getElementById('prayerArea')) document.getElementById('prayerArea').value = '';
     document.getElementById('imagePreview').style.display = 'none';
     document.getElementById('recordPreview').style.display = 'none';
@@ -3342,6 +3372,20 @@ function openCreateModal(type) {
     else if (type === 'prayer') switchCreateTab('prayer', document.querySelectorAll('.create-tab')[4]);
     else switchCreateTab('text', document.querySelectorAll('.create-tab')[0]);
 }
+
+function chooseCreateType(type){
+  const map={photo:'text',video:'text'};
+  const actual=map[type]||type;
+  const chooser=document.getElementById('createChooserPanel');const editor=document.getElementById('createEditorPanel');
+  if(chooser)chooser.style.display='none';if(editor)editor.style.display='block';
+  if(type==='photo'){createPostType='text';switchCreateTab('text',document.querySelectorAll('.create-tab')[0]);setTimeout(()=>document.getElementById('imageInput')?.click(),120);return;}
+  if(type==='video'){createPostType='text';switchCreateTab('text',document.querySelectorAll('.create-tab')[0]);setTimeout(()=>document.getElementById('videoInput')?.click(),120);return;}
+  const tabs=document.querySelectorAll('.create-tab');const index={text:0,audio:1,testimony:2,dream:3,prayer:4}[actual]??0;switchCreateTab(actual,tabs[index]);
+}
+function openQuickCreateMenu(){document.getElementById('mercyQuickCreate')?.classList.add('show');document.body.style.overflow='hidden';}
+function closeQuickCreateMenu(){document.getElementById('mercyQuickCreate')?.classList.remove('show');if(!document.getElementById('createModal')?.classList.contains('show'))document.body.style.overflow='';}
+function openMercyBrandViewer(){document.getElementById('mercyBrandViewer')?.classList.add('show');document.body.style.overflow='hidden';}
+function closeMercyBrandViewer(){document.getElementById('mercyBrandViewer')?.classList.remove('show');if(!document.getElementById('createModal')?.classList.contains('show')&&!document.getElementById('mercyQuickCreate')?.classList.contains('show'))document.body.style.overflow='';}
 
 function closeCreateModal() {
     document.getElementById('createModal').classList.remove('show');
@@ -3358,6 +3402,8 @@ function switchCreateTab(tab, btn) {
     document.getElementById('createTestimonyPanel').style.display = 'none';
     document.getElementById('createDreamPanel').style.display = 'none';
     if(document.getElementById('createPrayerPanel')) document.getElementById('createPrayerPanel').style.display = 'none';
+    document.getElementById('createEditorPanel').style.display = 'block';
+    document.getElementById('createChooserPanel').style.display = 'none';
     document.getElementById('publishBtn').style.display = 'block';
 
     if (tab === 'text') document.getElementById('createTextPanel').style.display = 'block';
@@ -3409,10 +3455,57 @@ function clearVideoSelection() {
     document.getElementById('videoInput').value = '';
 }
 
+let mercyComposerState={bg:'mercy',textColor:'#ffffff',fontSize:'1rem',align:'left',sticker:'',target:'createTextArea'};
+const MERCY_EMOJI_GROUPS={
+  '😀': '😀 😃 😄 😁 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🫡 🤭 🤫 🤥 😶 🫥 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🫠 🤢 🤮 🤧 😷 🤒 🤕',
+  '🙏': '🙏 🙏🏻 🙏🏼 🙏🏽 🙏🏾 🙏🏿 ✝️ 🕊️ 🪽 ⛪ 📖 ✨ 🌟 ⭐ 🌠 💫 🔥 ❤️ 🧡 💛 💚 💙 💜 🤍 🤎 🩷 🩵 🩶 🖤 💖 💗 💓 💞 💕 💌 💟 ❣️ 💔 ❤️‍🔥',
+  '👍': '👍 👎 👌 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 👇 ☝️ ✋ 🤚 🖐️ 🖖 👋 🤏 💪 👏 🙌 👐 🤲 🤝 💅 🙏 👑 💯',
+  '🐶': '🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🙈 🙉 🙊 🐒 🐔 🐧 🐦 🐤 🦋 🐝 🐞 🐢 🐍 🦎 🐳 🐬 🐟 🦈 🦅 🦉 🕊️',
+  '🍎': '🍏 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🫐 🍒 🍑 🥭 🍍 🥥 🥝 🍅 🥑 🍞 🧀 🍔 🍟 🍕 🌭 🌮 🍿 🍩 🍪 🎂 🍰 🧁 🍫 🍯 ☕ 🥤',
+  '⚽': '⚽ 🏀 🏈 ⚾ 🎾 🏐 🏉 🎱 🪀 🪁 🛹 ⛳ 🏆 🥇 🥈 🥉 🎖️ 🎵 🎶 🎤 🎧 🎸 🎹 🥁 🎺 🎻',
+  '🚗': '🚗 🚕 🚌 🚎 🏎️ 🚓 🚑 🚒 🚐 🛻 🚚 🚛 🚜 🛵 🏍️ 🚲 ✈️ 🚁 🚀 🚢 ⛵',
+  '💡': '💡 🔥 🌈 ☀️ 🌤️ ⛅ 🌧️ 🌩️ ❄️ 🌙 ⭐ 🌍 🌎 🌏 🎉 🎊 🎈 🎁 💎 💰 🔔 📱 💻 📷 🎥 ❤️‍🔥'
+};
+function mercySafePostMeta(meta){return {bg:meta?.bg||'mercy',textColor:meta?.textColor||'#ffffff',fontSize:meta?.fontSize||'1rem',align:meta?.align||'left',sticker:meta?.sticker||''};}
+function mercyEncodePostContent(text,meta){return 'MERCY_META::'+JSON.stringify({text:String(text||''),meta:mercySafePostMeta(meta)});}
+function mercyDecodePostContent(raw){
+  if(typeof raw!=='string') return {text:String(raw??''),meta:mercySafePostMeta({})};
+  if(!raw.startsWith('MERCY_META::')) return {text:raw,meta:mercySafePostMeta({})};
+  try{const o=JSON.parse(raw.slice(12));return {text:String(o.text||''),meta:mercySafePostMeta(o.meta||{})};}catch(e){return {text:raw.replace(/^MERCY_META::/,''),meta:mercySafePostMeta({})};}
+}
+function mercyGetComposerMeta(){return mercySafePostMeta(mercyComposerState);}
+function mercyComposerBg(bg){
+  mercyComposerState.bg=bg;
+  const names={mercy:'MERCY',glass:'Vidro',midnight:'Noite',dawn:'Luz',ocean:'Oceano',violet:'Violeta',rose:'Rosa',scripture:'Palavra'};
+  const label=document.getElementById('mercyComposerStyleName');if(label)label.textContent=names[bg]||'MERCY';
+  document.querySelectorAll('.mercy-bg-choices button').forEach(b=>b.classList.toggle('active',b.dataset.bg===bg));
+  const ta=document.getElementById('createTextArea'); if(ta){
+    const bgMap={mercy:"linear-gradient(180deg,rgba(3,7,12,.16),rgba(3,7,12,.62)),url('./mercy-background.jpg')",glass:'linear-gradient(145deg,rgba(255,255,255,.10),rgba(255,255,255,.025))',midnight:'linear-gradient(145deg,#101d32,#070c14)',dawn:'radial-gradient(circle at 50% 10%,rgba(255,221,154,.34),transparent 45%),linear-gradient(145deg,#16202b,#0a1018)',ocean:'radial-gradient(circle at 20% 20%,rgba(68,149,201,.28),transparent 35%),linear-gradient(145deg,#081a29,#071018)',violet:'radial-gradient(circle at 70% 20%,rgba(139,92,246,.30),transparent 38%),linear-gradient(145deg,#171127,#090b13)',rose:'radial-gradient(circle at 65% 15%,rgba(244,114,182,.26),transparent 38%),linear-gradient(145deg,#24121d,#0c0a10)',scripture:'linear-gradient(145deg,rgba(112,81,37,.32),rgba(8,10,14,.96)),repeating-linear-gradient(0deg,rgba(255,255,255,.025) 0 1px,transparent 1px 4px)'};
+    ta.style.backgroundImage=bgMap[bg]||bgMap.mercy; ta.style.backgroundSize='cover'; ta.style.backgroundPosition='center'; ta.style.color=mercyComposerState.textColor;ta.style.textAlign=mercyComposerState.align;ta.style.fontSize=mercyComposerState.fontSize;
+  }
+}
+function mercyComposerColor(v){mercyComposerState.textColor=v;const ta=document.getElementById('createTextArea');if(ta)ta.style.color=v;}
+function mercyComposerSize(v){mercyComposerState.fontSize=v;const ta=document.getElementById('createTextArea');if(ta)ta.style.fontSize=v;}
+function mercyComposerTextAlign(){mercyComposerState.align=mercyComposerState.align==='left'?'center':'left';const ta=document.getElementById('createTextArea');if(ta)ta.style.textAlign=mercyComposerState.align;}
+function mercyComposerSticker(){const stickers=['✨','🕊️','🙏','❤️','✝️','🌟','🪽','🔥','🙌','📖'];const st=stickers[Math.floor(Math.random()*stickers.length)];mercyComposerState.sticker=st;mercyInsertEmoji(st);}
+function mercyInsertEmoji(e,targetId){const ta=document.getElementById(targetId||mercyComposerState.target||'createTextArea');if(!ta)return;const a=ta.selectionStart??ta.value.length,b=ta.selectionEnd??a;ta.value=ta.value.slice(0,a)+e+ta.value.slice(b);ta.focus();ta.selectionStart=ta.selectionEnd=a+e.length;}
+function toggleMercyEmojiPicker(targetId){
+  const target=targetId||'createTextArea';mercyComposerState.target=target;const box=document.getElementById('mercyEmojiPicker');if(!box)return;
+  if(box.style.display==='block' && box.dataset.target===target){box.style.display='none';return;}
+  box.dataset.target=target;
+  const cats=Object.keys(MERCY_EMOJI_GROUPS);
+  box.innerHTML='<div class="mercy-emoji-cats">'+cats.map((c,i)=>`<button type="button" onclick="renderMercyEmojiCategory(${i})">${c}</button>`).join('')+'</div><div class="mercy-emoji-grid" id="mercyEmojiGrid"></div>';
+  box.style.display='block';renderMercyEmojiCategory(0);
+}
+function renderMercyEmojiCategory(i){const box=document.getElementById('mercyEmojiPicker');if(!box)return;const key=Object.keys(MERCY_EMOJI_GROUPS)[i]||Object.keys(MERCY_EMOJI_GROUPS)[0];const list=[...MERCY_EMOJI_GROUPS[key]];const grid=box.querySelector('#mercyEmojiGrid');if(!grid)return;grid.innerHTML=list.map(ch=>`<button type="button" onclick="mercyInsertEmoji(${JSON.stringify(ch)})">${ch}</button>`).join('');}
+function mercyResetComposer(){mercyComposerState={bg:'mercy',textColor:'#ffffff',fontSize:'1rem',align:'left',sticker:'',target:'createTextArea'};const ta=document.getElementById('createTextArea');if(ta){ta.style.color='#fff';ta.style.fontSize='1rem';ta.style.textAlign='left';ta.style.backgroundImage="linear-gradient(180deg,rgba(3,7,12,.16),rgba(3,7,12,.62)),url('./mercy-background.jpg')";ta.style.backgroundSize='cover';ta.style.backgroundPosition='center';}const c=document.getElementById('mercyComposerColor');if(c)c.value='#ffffff';const z=document.getElementById('mercyComposerSize');if(z)z.value='1rem';const ep=document.getElementById('mercyEmojiPicker');if(ep){ep.style.display='none';ep.innerHTML='';}mercyComposerBg('mercy');}
+
 async function publishPost() {
     if (!currentUser) { showToast('Faça login para publicar'); return; }
     let content='', subtype='word', type='text';
     if (createPostType==='text') { content=document.getElementById('createTextArea').value.trim(); if(selectedImage) type='image'; if(selectedVideoFile) type='video'; }
+    else if(createPostType==='audio'){ content=document.getElementById('audioCaption')?.value.trim() || ''; }
+    if(!content && createPostType==='audio' && recordedBlob) content='';
     else if(createPostType==='testimony'){content=document.getElementById('testimonyArea').value.trim(); subtype='testimony';}
     else if(createPostType==='dream'){content=document.getElementById('dreamArea').value.trim(); subtype='dream';}
     else if(createPostType==='prayer' || createPostType==='prayer-audio'){content=document.getElementById('prayerArea')?.value.trim() || ''; subtype='prayer';}
@@ -3424,12 +3517,13 @@ async function publishPost() {
             if(selectedImage){ const blob=dataUrlToBlob(selectedImage); image_url=await uploadMeryMedia(blob,'images','jpg',blob.type||'image/jpeg'); type='image'; }
             if(recordedBlob){ audio_url=await uploadMeryMedia(recordedBlob,'audio','webm',recordedBlob.type||'audio/webm'); type='audio'; }
             if(selectedVideoFile){ showToast('A enviar vídeo...'); const ext=(selectedVideoFile.name.split('.').pop()||'mp4').toLowerCase(); video_url=await uploadMeryMedia(selectedVideoFile,'videos',ext,selectedVideoFile.type||'video/mp4'); type='video'; }
-            const {error}=await mercySupabase.from('posts').insert({user_id:currentUser.id,type,subtype,content:content||(type==='image'?'📷 Foto':type==='video'?'🎬 Vídeo':'🎙️ Áudio'),image_url,audio_url,video_url,lang:currentUser.lang||'pt'});
+            const displayContent=content||(type==='image'?'📷 Foto':type==='video'?'🎬 Vídeo':'🎙️ Áudio');
+            const {error}=await mercySupabase.from('posts').insert({user_id:currentUser.id,type,subtype,content:mercyEncodePostContent(displayContent,mercyGetComposerMeta()),image_url,audio_url,video_url,lang:currentUser.lang||'pt'});
             if(error)throw error; closeCreateModal(); showToast('Publicado com sucesso!'); await renderFeed(); if(currentPage==='testimonies')await renderTestimonies(); if(currentPage==='dreams')await renderDreams();
         } catch(e){console.error(e);showToast('Não foi possível publicar.');} return;
     }
     let audioData=null;if(recordedBlob){audioData=await blobToDataURL(recordedBlob);type='audio';}
-    const posts=readJSON('mercy_posts',[]);posts.push({id:'p'+Date.now(),userId:currentUser.id,userName:currentUser.name,userAvatar:currentUser.avatar,type,subtype,content:content||(type==='image'?'📷 Foto':'🎙️ Áudio'),image:selectedImage,audio:audioData,lang:currentUser.lang||'pt',likes:0,comments:[],timestamp:Date.now(),likedBy:[]});writeJSON('mercy_posts',posts);closeCreateModal();showToast('Publicado com sucesso!');renderFeed();
+    const posts=readJSON('mercy_posts',[]);posts.push({id:'p'+Date.now(),userId:currentUser.id,userName:currentUser.name,userAvatar:currentUser.avatar,type,subtype,content:content||(type==='image'?'📷 Foto':'🎙️ Áudio'),composer:mercyGetComposerMeta(),image:selectedImage,audio:audioData,lang:currentUser.lang||'pt',likes:0,comments:[],timestamp:Date.now(),likedBy:[]});writeJSON('mercy_posts',posts);closeCreateModal();showToast('Publicado com sucesso!');renderFeed();
 }
 
 // ==================== GRAVAÇÃO DE ÁUDIO ====================
